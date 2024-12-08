@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { Noto_Sans_JP } from 'next/font/google';
+
+const noto = Noto_Sans_JP({
+  subsets: ['latin'],
+});
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,9 +31,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={noto.className}>
+      <body>
+        <Header/>
+        <main>
         {children}
+        </main>
+        <Footer/>
       </body>
     </html>
   );

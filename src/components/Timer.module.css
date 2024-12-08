@@ -1,0 +1,72 @@
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.button {
+    background-color: #f5f5f5;
+    outline: none;
+    border: 2px solid #DBCBB6;
+    height: 50px;
+    width: 100px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: .4s ease background-color;
+    font-size: 18px;
+}
+.button:hover {
+    background-color: #DBCBB6;
+}
+.on {
+    background-color: #DBCBB6 !important;
+    cursor: not-allowed !important;
+}
+
+.count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-direction: column;
+}
+.time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+    background-color: #f5f5f5;
+    width: 200px;
+    height: 60px;
+}
+.stop {
+    background-color: #4974a5;
+    color: #fff;
+    outline: none;
+    border: 2px solid #416894;
+    height: 40px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: .4s ease background-color;
+}
+.clear {
+    background-color: #a54974;
+    color: #fff;
+    outline: none;
+    border: 2px solid #944168;
+    height: 40px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: .4s ease background-color;
+}
