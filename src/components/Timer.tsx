@@ -12,6 +12,7 @@ export function Timer() {
   const [stop, setStop] = useState(false);
   const [lastTime, setLastTime] = useState(Number);
   const [first, setFirst] = useState(true);
+  let sum = 0;
 
   function click(time: number) {
     if (timeStart) {
@@ -19,8 +20,8 @@ export function Timer() {
     }
     setFirst(false);
     setTimeStart(true);
-    let initialTime  = time * 1000 * 60;
-    console.log("initialTime" + initialTime);
+    let initialTime = time * 1000 * 60;
+    // console.log("initialTime" + initialTime);
     setCurrentTime(initialTime);
     setLastTime(initialTime);
     setMinutes(Math.floor(initialTime / 60000));
@@ -32,10 +33,13 @@ export function Timer() {
     });
 
     timerInterval.current = setInterval(function timer() {
-        initialTime -= 1000;
+      initialTime -= 1000;
       setMinutes(Math.floor(initialTime / 60000));
       setSeconds((initialTime % 60000) / 1000);
       setLastTime(initialTime);
+      const storageTime = localStorage.getItem("time");
+      sum = Number(storageTime) + 1000;
+      localStorage.setItem("time", String(sum));
       if (initialTime < 0) {
         setTimeStart(false);
         reset();
@@ -49,10 +53,12 @@ export function Timer() {
     }
 
     let currentStopTime = currentTime;
-    if(lastTime != 0) {currentStopTime = lastTime;}
+    if (lastTime != 0) {
+      currentStopTime = lastTime;
+    }
 
-    console.log("initialTime" + currentTime);
-    console.log("currentStopTime" + currentStopTime);
+    // console.log("initialTime" + currentTime);
+    // console.log("currentStopTime" + currentStopTime);
     if (!stop) {
       if (timerInterval.current) {
         clearInterval(timerInterval.current);
@@ -68,6 +74,9 @@ export function Timer() {
         setSeconds((currentStopTime % 60000) / 1000);
         currentStopTime -= 1000;
         setLastTime(currentStopTime);
+        const storageTime = localStorage.getItem("time");
+        sum = Number(storageTime) + 1000;
+        localStorage.setItem("time", String(sum));
         if (currentStopTime < 0) {
           setTimeStart(false);
           reset();
@@ -110,7 +119,7 @@ export function Timer() {
 
   return (
     <>
-      <div className={styles.count}>
+      <section className={styles.count}>
         <h1 className={styles.h1}>集中時間</h1>
         <p className={styles.time}>
           {minutes.toString().padStart(2, "0")}:
@@ -124,7 +133,7 @@ export function Timer() {
             リセット
           </button>
         </div>
-      </div>
+      </section>
       <section className={styles.buttons}>
         <button onClick={() => click(10)} className={styles.button}>
           10m
