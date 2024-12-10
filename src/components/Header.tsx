@@ -6,6 +6,7 @@ export function Header() {
         <>
         <header>
             <Link href={"/"}>Home</Link>
+            <Link href={"/history"}>History</Link>
         </header>
         </>
     );
