@@ -11,14 +11,14 @@ export function Timer() {
   const [currentTime, setCurrentTime] = useState(Number);
   const [stop, setStop] = useState(false);
   const [lastTime, setLastTime] = useState(Number);
-  const [first, setFirst] = useState(true);
+  const first = useRef(true);
   let sum = 0;
 
   function click(time: number) {
     if (timeStart) {
       return;
     }
-    setFirst(false);
+    first.current = false;
     setTimeStart(true);
     let initialTime = time * 1000 * 60;
     setCurrentTime(initialTime);
@@ -43,18 +43,14 @@ export function Timer() {
         sum = Number(cookieTime) + 1000;
       }
       document.cookie = "time=" + String(sum) + "; max-age=31536000; Secure";
-      if (initialTime < 0) {
-        if (timerInterval.current) {
-          clearInterval(timerInterval.current);
-        }
-        setTimeStart(false);
+      if (initialTime <= 0) {
         reset();
       }
     }, 1000);
   }
 
   function stopRestart() {
-    if (first) {
+    if (first.current) {
       return;
     }
 
@@ -85,11 +81,7 @@ export function Timer() {
           sum = Number(cookieTime) + 1000;
         }
         document.cookie = "time=" + String(sum) + "; max-age=31536000; Secure";
-        if (currentStopTime < 0) {
-          if (timerInterval.current) {
-            clearInterval(timerInterval.current);
-          }
-          setTimeStart(false);
+        if (currentStopTime <= 0) {
           reset();
         }
       }, 1000);
@@ -102,7 +94,7 @@ export function Timer() {
   }
 
   function reset() {
-    if (first) {
+    if (first.current) {
       return;
     }
     if (timerInterval.current) {
@@ -125,7 +117,7 @@ export function Timer() {
       stop.innerHTML = "一時停止";
     });
     setStop(false);
-    setFirst(true);
+    first.current = true;
   }
 
   return (
