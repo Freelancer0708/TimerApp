@@ -8,8 +8,12 @@ export default function History() {
   const [seconds, setSeconds] = useState(Number);
 
   useEffect(() => {
-    const storageTime = localStorage.getItem("time");
-    const time = Number(storageTime) / 1000;
+    const cookieTime = document.cookie.split("; ").find((row) => row.startsWith("time="))?.split("=")[1];
+    let time = 0;
+    if (cookieTime) {
+      time = Number(cookieTime) / 1000;
+    }
+
     setHous(Math.floor(time / 3600));
     setMinutes(Math.floor((time % 3600) / 60));
     setSeconds(Math.floor((time % 3600) % 60));

@@ -21,7 +21,6 @@ export function Timer() {
     setFirst(false);
     setTimeStart(true);
     let initialTime = time * 1000 * 60;
-    // console.log("initialTime" + initialTime);
     setCurrentTime(initialTime);
     setLastTime(initialTime);
     setMinutes(Math.floor(initialTime / 60000));
@@ -37,10 +36,17 @@ export function Timer() {
       setMinutes(Math.floor(initialTime / 60000));
       setSeconds((initialTime % 60000) / 1000);
       setLastTime(initialTime);
-      const storageTime = localStorage.getItem("time");
-      sum = Number(storageTime) + 1000;
-      localStorage.setItem("time", String(sum));
+      const cookieTime = document.cookie.split("; ").find((row) => row.startsWith("time="))?.split("=")[1];
+      if (!cookieTime) {
+        sum = 1000;
+      } else {
+        sum = Number(cookieTime) + 1000;
+      }
+      document.cookie = "time=" + String(sum) + "; max-age=31536000; Secure";
       if (initialTime < 0) {
+        if (timerInterval.current) {
+          clearInterval(timerInterval.current);
+        }
         setTimeStart(false);
         reset();
       }
@@ -57,8 +63,6 @@ export function Timer() {
       currentStopTime = lastTime;
     }
 
-    // console.log("initialTime" + currentTime);
-    // console.log("currentStopTime" + currentStopTime);
     if (!stop) {
       if (timerInterval.current) {
         clearInterval(timerInterval.current);
@@ -74,10 +78,17 @@ export function Timer() {
         setSeconds((currentStopTime % 60000) / 1000);
         currentStopTime -= 1000;
         setLastTime(currentStopTime);
-        const storageTime = localStorage.getItem("time");
-        sum = Number(storageTime) + 1000;
-        localStorage.setItem("time", String(sum));
+        const cookieTime = document.cookie.split("; ").find((row) => row.startsWith("time="))?.split("=")[1];
+        if (!cookieTime) {
+          sum = 1000;
+        } else {
+          sum = Number(cookieTime) + 1000;
+        }
+        document.cookie = "time=" + String(sum) + "; max-age=31536000; Secure";
         if (currentStopTime < 0) {
+          if (timerInterval.current) {
+            clearInterval(timerInterval.current);
+          }
           setTimeStart(false);
           reset();
         }
