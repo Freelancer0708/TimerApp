@@ -138,7 +138,7 @@ export function Timer() {
         </div>
       </section>
       <section className={styles.buttons}>
-        <button onClick={() => click(0.1)} className={styles.button}>
+        <button onClick={() => click(10)} className={styles.button}>
           10m
         </button>
         <button onClick={() => click(30)} className={styles.button}>
